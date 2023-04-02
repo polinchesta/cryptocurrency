@@ -12,3 +12,59 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0px;
+}
+
+thead th{
+  padding: 15px 0px;
+  border-top: 3px solid #92b8bd;
+  border-bottom: 3px solid #92b8bd;
+}
+  
+th:nth-child(1) {
+  width: 7%;
+}
+  
+th:nth-child(2) {
+  width: 20%;
+}
+  
+th:nth-child(3)  {
+  width: 15%;
+  
+}
+
+th:nth-child(5){
+  text-align: center;
+}
+  
+th:nth-child(4), th:nth-child(6) {
+  width: 18%;
+}
+  
+th, td {
+  padding: 5px 0px;
+  text-align: left;
+}
+
+.buttonModal{
+  display: flex;
+  justify-content: center;
+}
+
+
+.buttonPagination{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.buttonPagination > button{
+  margin: 10px;
+}
+
