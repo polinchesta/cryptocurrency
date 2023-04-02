@@ -12,7 +12,7 @@ const PageCrypto: React.FC<PageCryptoProps> = ({ id }) => {
   useEffect(() => {
     axios.get(`https://api.coincap.io/v2/assets/${id}`)
       .then(response => setAsset(response.data.data))
-      /* .catch(error => console.log(error)); */
+      .catch(error => console.log(error));
   }, [id]);
 
   if (!asset) {
@@ -23,8 +23,8 @@ const PageCrypto: React.FC<PageCryptoProps> = ({ id }) => {
     <div>
       <h2>{asset.name}</h2>
       <p>Symbol: {asset.symbol}</p>
-      <p>Price: {Number(asset.priceUsd).toFixed(2)}$</p>
-      <p>Market Cap: {Number(asset.marketCapUsd).toFixed(2)}$</p>
+      <p>Price: {Number(asset.priceUsd).toFixed(4)}$</p>
+      <p>Market Cap: {Number(asset.marketCapUsd).toFixed(4)}$</p>
     </div>
   );
 };
