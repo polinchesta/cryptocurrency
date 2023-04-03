@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useAssets from "./useAssets";
 import "./Main.scss";
-import Modal from '../modal/Modal'
+import Modal from '../../components/modal/Modal'
 import { Link } from "react-router-dom";
 
 
@@ -58,11 +58,11 @@ const Main = () => {
                     <input type="text"></input>
                     <button className="buttonModal" type="submit">Сохранить</button>
                   </Modal></td>
-                <td><Link to={`/currency/${asset.id}`}><button>Подробнее</button></Link></td>
-
+                <td><Link to={`/currency/${asset.id}`}>
+                  <button>Подробнее</button>
+                </Link></td>
               </tr>
             ))}
-
           </tbody>
         </table>
       )}
