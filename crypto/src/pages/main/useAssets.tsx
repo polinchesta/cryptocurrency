@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { COINCAP_API_URL } from "../../constant/constant";
 
-type Asset = {
+export type Asset = {
     id: string;
     rank: string;
     symbol: string;
@@ -23,11 +23,9 @@ type AssetsData = {
 const PAGE_SIZE = 100;
 
 const fetchData = async (page: number): Promise<Asset[]> => {
-    const response = await axios.get<AssetsData>(`${COINCAP_API_URL}/assets?limit=${PAGE_SIZE}&offset=${(page - 1) * PAGE_SIZE}`
-    );
+    const response = await axios.get<AssetsData>(`${COINCAP_API_URL}/assets?limit=${PAGE_SIZE}&offset=${(page - 1) * PAGE_SIZE}`);
     return response.data.data;
 };
-
 
 const useAssets = () => {
     const [assets, setAssets] = useState<Asset[]>([]);
@@ -37,8 +35,8 @@ const useAssets = () => {
     useEffect(() => {
         setLoading(true);
         fetchData(currentPage)
-            .then((data) => {
-                setAssets(data);
+            .then((response) => {
+                setAssets(response);
                 setLoading(false);
             })
             .catch((error) => {

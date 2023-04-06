@@ -6,6 +6,10 @@ import { Link } from 'react-router-dom';
 import './Header.scss'
 import { COINCAP_API_URL } from '../../constant/constant';
 import Modal from '../modal/Modal';
+import {
+  setLocalStorageItem,
+  getLocalStorageItem,
+} from '../../localStorage/LocalStorage';
 
 interface Crypto {
   id: string;
@@ -16,6 +20,7 @@ interface Crypto {
 function Header() {
   const [topThreeCryptos, setTopThreeCryptos] = useState<Crypto[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [portfolioCurrencies, setPortfolioCurrencies] = useState<string[]>(getLocalStorageItem('portfolio') || []);
 
   useEffect(() => {
     async function fetchTopThreeCryptos() {
@@ -39,6 +44,11 @@ function Header() {
     setIsOpen(false);
   };
 
+  const handleRemoveCurrency = (currency: string) => {
+    const updatedCurrencies = portfolioCurrencies.filter((c) => c !== currency);
+    setPortfolioCurrencies(updatedCurrencies);
+    setLocalStorageItem('portfolio', updatedCurrencies);
+  };
 
   return (
     <header>
@@ -59,13 +69,24 @@ function Header() {
         <div className="header-backpack">
           <img className='backpack' src={backpack} alt="User Backpack" onClick={handleOpenModal}></img>
           <Modal onClose={handleCloseModal} isOpen={isOpen} title="Портфель пользователя">
-            <label>Общее количество:</label>
-            <input type="text"></input>
-            <button className="buttonModal" type="submit">Сохранить</button>
+            {Array.isArray(portfolioCurrencies) && portfolioCurrencies.length === 0 ? (
+              <p>Портфель пуст</p>
+            ) : (
+              <ul>
+                {Array.isArray(portfolioCurrencies) && portfolioCurrencies.map((currency) => (
+                  <li key={currency}>
+                    <span>{currency}</span>
+                    <button onClick={() => handleRemoveCurrency(currency)}>Убрать из портфеля</button>
+                  </li>
+                ))}
+
+              </ul>
+            )}
+
           </Modal>
-        </div>   
-        
-    </div>
+        </div>
+
+      </div>
     </header >
   );
 }

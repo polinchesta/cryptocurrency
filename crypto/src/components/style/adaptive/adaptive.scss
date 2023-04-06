@@ -1,0 +1,34 @@
+p,
+th,
+td,
+label,
+input {
+  @media (max-width: 1024px) {
+    font-size: 17px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+  }
+}
+
+button {
+  @media (max-width: 1024px) {
+    font-size: 15px;
+    padding: 8px 15px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+}

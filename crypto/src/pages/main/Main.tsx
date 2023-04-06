@@ -59,7 +59,7 @@ const Main = () => {
                     <button className="buttonModal" type="submit">Сохранить</button>
                   </Modal></td>
                 <td><Link to={`/currency/${asset.id}`}>
-                  <button>Подробнее</button>
+                    <button>Подробнее</button>
                 </Link></td>
               </tr>
             ))}
@@ -79,5 +79,6 @@ const Main = () => {
     </div>
   );
 };
+
 
 export default Main;

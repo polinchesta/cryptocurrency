@@ -1,7 +1,20 @@
+.info{
+    display: flex;
+}
+
 .buttonHome{
     margin-top: 20px;
 }
 
-p{
-    margin: 5px 0px;
+.baseInfo{
+    margin: 20px 0px;
 }
+
+.allInfo{
+    margin: 60px 0px;   
+}
+
+p{
+    padding: 5px 0px;
+}
+
