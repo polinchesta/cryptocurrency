@@ -1,5 +1,6 @@
 .info{
     display: flex;
+    width: 100%;
 }
 
 .buttonHome{
@@ -7,10 +8,12 @@
 }
 
 .baseInfo{
+    width: 50%;
     margin: 20px 0px;
 }
 
 .allInfo{
+    width: 50%;
     margin: 60px 0px;   
 }
 
