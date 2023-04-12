@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../../../public/logo.png';
-import backpack from '../../../public/backpack.jpg';
+import logo from '../../ui/image/logo.png';
+import backpack from '../../ui/image/backpack.jpg';
 import { Link } from 'react-router-dom';
 import './Header.scss';
 import ModalFinding from '../../ui/modalFinding/ModalFinding';

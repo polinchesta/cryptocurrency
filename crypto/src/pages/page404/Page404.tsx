@@ -1,6 +1,6 @@
 import React from 'react';
 import './Page404.scss';
-import monster from '../../../public/monster.svg';
+import monster from '../../ui/image/monster.svg';
 
 export function Page404() {
     return (
