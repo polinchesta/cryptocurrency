@@ -7,13 +7,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(196, 193, 193, 0.5);
+    z-index: 9999;
+}
+
+.modal-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9998;
+    background-color: hsl(0, 2%, 76%, 0.5);
 }
 
 .modalFinding-content {
     position: relative;
     height: 90%;
-    max-height: 600px;
+    max-height: 300px;
     width: 90%;
     max-width: 600px;
     background-color: white;

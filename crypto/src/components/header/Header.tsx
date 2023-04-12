@@ -57,7 +57,9 @@ function Header() {
                     <ModalFinding
                         onClose={handleCloseModal}
                         isOpen={isOpen}
-                        title="Портфель пользователя" assetId={''} />
+                        title="Портфель пользователя"
+                        assetId={''}
+                    />
                 </div>
             </div>
         </header>

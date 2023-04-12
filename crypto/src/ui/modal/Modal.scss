@@ -1,3 +1,15 @@
+.modal-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9998;
+    background-color: hsl(0, 2%, 76%, 0.5);
+}
+
+
+
 .modal {
     position: fixed;
     top: 0;
@@ -7,7 +19,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(196, 193, 193, 0.01);
     z-index: 9999;
 }
 
@@ -64,7 +75,7 @@ label {
 
 .modal-save {
     background-color: #33a8b8;
-    width: 80%;
+    width: 85%;
     color: #fff;
     padding: 8px 16px;
     border: none;

@@ -3,6 +3,7 @@ import useAssets from '../../api/useAssets';
 import './Main.scss';
 import MainTable from './components/MainTable';
 import Pagination from './components/MainPagination';
+import { Asset } from '../../types/ApiTypes';
 
 const Main = () => {
     const { assets, currentPage, setCurrentPage, loading } = useAssets();
@@ -40,7 +41,7 @@ const Main = () => {
             ) : (
                 <div>
                     <MainTable
-                        assets={assets}
+                        assets={assets as Asset[]} // Update the type of assets
                         handleOpenModal={handleOpenModal}
                         handleCloseModal={handleCloseModal}
                         isOpen={isOpen}

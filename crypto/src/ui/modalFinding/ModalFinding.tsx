@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchCurrencies } from '../../api/ModalApi';
 import { Currency, ModalProps } from '../../types/ModalTypes';
-import "./ModalFinding.scss"
+import './ModalFinding.scss';
 
 const ModalFinding: React.FC<ModalProps> = ({ onClose, isOpen, title }) => {
     const [currencies, setCurrencies] = useState<Currency[]>([]);
@@ -46,7 +46,10 @@ const ModalFinding: React.FC<ModalProps> = ({ onClose, isOpen, title }) => {
     }, [currencies]);
 
     useEffect(() => {
-        const percentageChange = ((portfolioValue - initialPortfolioValue) / initialPortfolioValue * 100).toFixed(2);
+        const percentageChange = (
+            ((portfolioValue - initialPortfolioValue) / initialPortfolioValue) *
+            100
+        ).toFixed(2);
         setPercentageChange(parseFloat(percentageChange));
         localStorage.setItem('percentageChange', percentageChange);
     }, [portfolioValue, initialPortfolioValue]);
@@ -58,7 +61,9 @@ const ModalFinding: React.FC<ModalProps> = ({ onClose, isOpen, title }) => {
     const handleDeleteCurrency = (currencyId: string) => {
         localStorage.removeItem(currencyId);
 
-        const updatedCurrencies = currencies.filter(currency => currency.currencyId !== currencyId);
+        const updatedCurrencies = currencies.filter(
+            (currency) => currency.currencyId !== currencyId
+        );
         setCurrencies(updatedCurrencies);
 
         const totalValue = updatedCurrencies.reduce((total, currency) => {
@@ -66,62 +71,79 @@ const ModalFinding: React.FC<ModalProps> = ({ onClose, isOpen, title }) => {
         }, 0);
         setPortfolioValue(totalValue);
 
-        const percentageChange = ((totalValue - initialPortfolioValue) / initialPortfolioValue * 100).toFixed(2);
+        const percentageChange = (
+            ((totalValue - initialPortfolioValue) / initialPortfolioValue) *
+            100
+        ).toFixed(2);
         localStorage.setItem('portfolioValue', totalValue.toString());
         localStorage.setItem('percentageChange', percentageChange);
     };
 
-
     return (
-        <div className="modalFinding">
-            <div className="modalFinding-content">
-                <div className="modalFinding-close" onClick={onClose}>
-                    &times;
-                </div>
-                <div className="modalFinding-title">{title}</div>
-                <div className="modalFinding-body">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th className='modalFinding-table'>Валюта</th>
-                                <th className='modalFinding-table'>Кол-во</th>
-                                <th className='modalFinding-table'>Цена (USD)</th>
-                                <th className='modalFinding-table'>Общая сумма</th>
-                                <th className='modalFinding-table'>Изменения</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {currencies.map((currency) => (
-                                <tr key={currency.currencyId}>
-                                    <td className='modalFinding-table'>{currency.currencyId}</td>
-                                    <td className='modalFinding-table'>{currency.quantity}</td>
-                                    <td className='modalFinding-table'>{Number(currency.price).toFixed(2)}</td>
-                                    <td className='modalFinding-table'>{(parseFloat(currency.quantity) * currency.price).toFixed(2)}</td>
-                                    {localStorage.getItem(currency.currencyId) && (
-                                        <td className='modalFinding-table'>
-                                            <button onClick={() => handleDeleteCurrency(currency.currencyId)}>
-                                                Удалить
-                                            </button>
-                                        </td>
-                                    )}
+        <div className="modal-wrapper">
+            <div className="modalFinding">
+                <div className="modalFinding-content">
+                    <div className="modalFinding-close" onClick={onClose}>
+                        &times;
+                    </div>
+                    <div className="modalFinding-title">{title}</div>
+                    <div className="modalFinding-body">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th className="modalFinding-table">Валюта</th>
+                                    <th className="modalFinding-table">Кол-во</th>
+                                    <th className="modalFinding-table">Цена (USD)</th>
+                                    <th className="modalFinding-table">Общая сумма</th>
+                                    <th className="modalFinding-table">Изменения</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <div>
-                        {localStorage.getItem('percentageChange') !== '' && localStorage.getItem('percentageChange') !== null && !isNaN(Number(localStorage.getItem('percentageChange'))) ? (
-                            <p>
-                                Стоимость портфеля пользователя: {Number(localStorage.getItem('portfolioValue')).toFixed(2)} USD
-                                ({localStorage.getItem('percentageChange')}%)
-                            </p>
-                        ) : (
-                            <p>Значения не найдены в localStorage.</p>
-                        )}
+                            </thead>
+                            <tbody>
+                                {currencies.map((currency) => (
+                                    <tr key={currency.currencyId}>
+                                        <td className="modalFinding-table">{currency.currencyId}</td>
+                                        <td className="modalFinding-table">{currency.quantity}</td>
+                                        <td className="modalFinding-table">
+                                            {Number(currency.price).toFixed(2)}
+                                        </td>
+                                        <td className="modalFinding-table">
+                                            {(parseFloat(currency.quantity) * currency.price).toFixed(
+                                                2
+                                            )}
+                                        </td>
+                                        {localStorage.getItem(currency.currencyId) && (
+                                            <td className="modalFinding-table">
+                                                <button
+                                                    onClick={() =>
+                                                        handleDeleteCurrency(currency.currencyId)
+                                                    }>
+                                                    Удалить
+                                                </button>
+                                            </td>
+                                        )}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        <div>
+                            {localStorage.getItem('percentageChange') !== '' &&
+                                localStorage.getItem('percentageChange') !== null &&
+                                !isNaN(Number(localStorage.getItem('percentageChange'))) ? (
+                                <p>
+                                    Стоимость портфеля пользователя:{' '}
+                                    {Number(localStorage.getItem('portfolioValue')).toFixed(2)} USD (
+                                    {localStorage.getItem('percentageChange')}%)
+                                </p>
+                            ) : (
+                                <p>Значения не найдены.</p>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
+            <div className="modal-overlay"></div>
         </div>
-    )
-}
+    );
+};
 
 export default ModalFinding;

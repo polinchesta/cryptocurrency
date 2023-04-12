@@ -1,6 +1,6 @@
 export type Asset = {
     id: string;
-    rank: string;
+    rank: number;
     symbol: string;
     name: string;
     supply: string;

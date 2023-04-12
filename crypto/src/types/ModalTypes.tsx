@@ -4,7 +4,7 @@ export interface ModalProps {
     title: string;
     assetId: string;
     children?: React.ReactNode;
-}   
+}
 
 export interface Currency {
     currencyId: string;

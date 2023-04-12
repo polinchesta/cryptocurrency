@@ -10,15 +10,22 @@ thead th {
   border-bottom: 3px solid #92b8bd;
 }
 
-th,
-td {
-  width: auto;
-  text-align: left;
+th {
+  text-align: center;
+}
+
+td{
+  text-align: center;
+  margin: 0px auto;
+  width: 50%;
+}
+
+.firstColumn{
+  width: 15%;
 }
 
 .buttonModal {
-  display: flex;
-  justify-content: center;
+  width: 10%;
 }
 
 .buttonPagination {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { XAxis, YAxis, Tooltip, Legend, Area, AreaChart, ResponsiveContainer } from 'recharts';
 import axios, { AxiosError } from 'axios';
 import { COINCAP_API_URL } from '../../../constant/constant';
-import './LineChartComponent.scss'
+import './LineChartComponent.scss';
 
 interface LineChartComponentProps {
     id: string;
@@ -31,7 +31,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({ id }) => {
 
     return (
         <div className="chart-container">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height={300}>
                 <AreaChart
                     data={data}
                     margin={{
