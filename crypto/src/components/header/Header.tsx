@@ -10,6 +10,27 @@ import { Asset } from '../../types/ApiTypes';
 function Header() {
     const [topThreeCryptos, setTopThreeCryptos] = useState<Asset[]>([]);
     const [isOpen, setIsOpen] = useState(false);
+    const [portfolioValue, setPortfolioValue] = useState(Number(localStorage.getItem('portfolioValue')));
+    const [initialPortfolioValue, setInitialPortfolioValue] = useState(Number(localStorage.getItem('initialPortfolioValue')));
+    const [difference, setDifference] = useState(0);
+    const [percent, setPercent] = useState(0);
+
+    useEffect(() => {
+        const portfolioValueFromLocalStorage = Number(localStorage.getItem('portfolioValue'));
+        const initialPortfolioValueFromLocalStorage = Number(localStorage.getItem('initialPortfolioValue'));
+        if (!initialPortfolioValueFromLocalStorage) {
+            localStorage.setItem('initialPortfolioValue', portfolioValueFromLocalStorage.toString());
+            setInitialPortfolioValue(portfolioValueFromLocalStorage);
+        } else {
+            setInitialPortfolioValue(initialPortfolioValueFromLocalStorage);
+        }
+
+        const difference = portfolioValueFromLocalStorage - initialPortfolioValueFromLocalStorage;
+        const percent = ((difference / initialPortfolioValueFromLocalStorage) * 100).toFixed(3);
+        setPortfolioValue(portfolioValueFromLocalStorage);
+        setDifference(difference);
+        setPercent(Number(percent));
+    }, [localStorage.getItem('portfolioValue'), localStorage.getItem('initialPortfolioValue')]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,6 +39,9 @@ function Header() {
         };
         fetchData();
     }, []);
+
+    const displayDifference = difference < 0 ? `- ${Math.abs(difference).toFixed(2)}` : `+ ${difference.toFixed(2)}`;
+    const displayPercent = isNaN(percent) ? '0' : `${percent}%`;
 
     const handleOpenModal = () => {
         setIsOpen(true);
@@ -47,7 +71,14 @@ function Header() {
                             </div>
                         ))}
                     </div>
+                    <div>
+                        <p>
+                            Сумма: {Number(initialPortfolioValue).toFixed(2)} USD {displayDifference} ({displayPercent})
+                        </p>
+                    </div>
+                    
                 </div>
+
                 <div className="header-backpack">
                     <img
                         className="backpack"

@@ -7,7 +7,7 @@ type AssetsData = {
     data: Asset[];
 };
 
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 15;
 
 const fetchData = async (page: number): Promise<Asset[]> => {
     const response = await axios.get<AssetsData>(

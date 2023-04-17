@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { ModalProps } from '../../types/ModalTypes';
 import './Modal.scss';
 
@@ -9,32 +9,31 @@ interface ModalContextValue {
 
 const ModalContext = React.createContext<ModalContextValue>({
     quantity: '',
-    setQuantity: () => {},
+    setQuantity: () => { },
 });
 
 const Modal: React.FC<ModalProps> = ({ onClose, isOpen, title, assetId }) => {
-    const [quantity, setQuantity] = useState('');
+    const [quantity, setQuantity] = useState<string>('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        if (/^\d+$/.test(value) || value === '') {
-            if (value === '0') {
-                setQuantity('');
-            } else {
-                setQuantity(value);
-            }
+        if (/^(0(\.\d{0,3})?|[1-9]\d*(\.\d{0,3})?)$/.test(value) || value === '') {
+            setQuantity(value);
         }
     };
-
+    
     const handleSave = () => {
         localStorage.setItem(assetId, quantity);
+        window.location.reload();
         onClose();
         setQuantity('');
     };
 
+
     if (!isOpen) {
         return null;
     }
+
     return (
         <ModalContext.Provider value={{ quantity, setQuantity }}>
             <div className="modal-wrapper">
@@ -49,7 +48,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, isOpen, title, assetId }) => {
                             <input
                                 className="modal-text"
                                 type="text"
-                                value={quantity}
+                                value={quantity === '' ? '' : quantity.toString()}
                                 onChange={handleChange}
                             />
                             <button className="modal-save" onClick={handleSave} type="button">

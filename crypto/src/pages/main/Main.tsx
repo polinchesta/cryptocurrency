@@ -9,7 +9,7 @@ const Main = () => {
     const { assets, currentPage, setCurrentPage, loading } = useAssets();
     const [isOpen, setIsOpen] = useState(false);
     const [selectedAssetId, setSelectedAssetId] = useState('');
-
+      
     const handleFirstPage = () => {
         setCurrentPage(1);
     };
@@ -21,9 +21,9 @@ const Main = () => {
     };
 
     const handleNextPage = () => {
-        setCurrentPage((prevPage) => prevPage + 1);
+            setCurrentPage((prevPage) => prevPage + 1);
     };
-
+    
     const handleOpenModal = (assetId: string) => {
         setSelectedAssetId(assetId);
         setIsOpen(true);

@@ -27,7 +27,7 @@ const Pagination = ({
                 disabled={currentPage === 1}>
                 Предыдущая
             </button>
-            <button onClick={handleNextPage} disabled={currentPage === 24}>
+            <button onClick={handleNextPage} disabled={currentPage === 154}>
                 Следующая
             </button>
         </div>

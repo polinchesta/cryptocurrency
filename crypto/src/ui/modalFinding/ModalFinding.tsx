@@ -5,80 +5,66 @@ import './ModalFinding.scss';
 
 const ModalFinding: React.FC<ModalProps> = ({ onClose, isOpen, title }) => {
     const [currencies, setCurrencies] = useState<Currency[]>([]);
-    const [initialPortfolioValue, setInitialPortfolioValue] = useState<number>(0);
-    const [portfolioValue, setPortfolioValue] = useState(initialPortfolioValue);
-    const [percentageChange, setPercentageChange] = useState<number>(0);
+    const [initialPortfolioValue, setInitialPortfolioValue] = useState(Number(localStorage.getItem('initialPortfolioValue')));
+    const [portfolioValue, setPortfolioValue] = useState(0);
+    const [percent, setPercent] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const storedCurrencies = await fetchCurrencies();
                 setCurrencies(storedCurrencies);
-
+    
                 const totalValue = storedCurrencies.reduce((total, currency) => {
                     return total + parseFloat(currency.quantity) * currency.price;
                 }, 0);
                 setPortfolioValue(totalValue);
-
-                localStorage.setItem('portfolioValue', totalValue.toString());
-
-                setInitialPortfolioValue(totalValue);
             } catch (error) {
                 console.error('Failed to fetch currencies:', error);
             }
         };
-
+    
         fetchData();
     }, []);
 
     useEffect(() => {
-        const initialPortfolioValue = currencies.reduce((total, currency) => {
-            return total + parseFloat(currency.quantity) * currency.price;
-        }, 0);
-        setInitialPortfolioValue(initialPortfolioValue);
-
-        const portfolioValue = currencies.reduce((total, currency) => {
-            const storedPrice = localStorage.getItem(currency.currencyId);
-            const price = storedPrice ? parseFloat(storedPrice) : currency.price;
-            return total + parseFloat(currency.quantity) * price;
-        }, 0);
-        setPortfolioValue(portfolioValue);
-    }, [currencies]);
-
+        const storedInitialValue = localStorage.getItem('initialPortfolioValue');
+        if (storedInitialValue) {
+            setInitialPortfolioValue(parseFloat(storedInitialValue));
+        }
+    }, []);
+    
+    
     useEffect(() => {
-        const percentageChange = (
-            ((portfolioValue - initialPortfolioValue) / initialPortfolioValue) *
-            100
-        ).toFixed(2);
-        setPercentageChange(parseFloat(percentageChange));
-        localStorage.setItem('percentageChange', percentageChange);
-    }, [portfolioValue, initialPortfolioValue]);
-
+        const difference = initialPortfolioValue - portfolioValue;
+        const calculatedPercent = ((difference / initialPortfolioValue) * 100).toFixed(2);
+        setPercent(Number(calculatedPercent));
+    }, [initialPortfolioValue, portfolioValue]);
+    
+    useEffect(() => {
+        localStorage.setItem('initialPortfolioValue', initialPortfolioValue.toString());
+    }, [initialPortfolioValue]);
+    
+    useEffect(() => {
+        localStorage.setItem('portfolioValue', portfolioValue.toString());
+    }, [portfolioValue]);
+    
     if (!isOpen) {
         return null;
     }
-
+    
     const handleDeleteCurrency = (currencyId: string) => {
         localStorage.removeItem(currencyId);
+        localStorage.removeItem('portfolioValue');
+        localStorage.removeItem('initialPortfolioValue');
 
+    
         const updatedCurrencies = currencies.filter(
             (currency) => currency.currencyId !== currencyId
         );
         setCurrencies(updatedCurrencies);
-
-        const totalValue = updatedCurrencies.reduce((total, currency) => {
-            return total + parseFloat(currency.quantity) * currency.price;
-        }, 0);
-        setPortfolioValue(totalValue);
-
-        const percentageChange = (
-            ((totalValue - initialPortfolioValue) / initialPortfolioValue) *
-            100
-        ).toFixed(2);
-        localStorage.setItem('portfolioValue', totalValue.toString());
-        localStorage.setItem('percentageChange', percentageChange);
     };
-
+    
     return (
         <div className="modal-wrapper">
             <div className="modalFinding">
@@ -125,19 +111,6 @@ const ModalFinding: React.FC<ModalProps> = ({ onClose, isOpen, title }) => {
                                 ))}
                             </tbody>
                         </table>
-                        <div>
-                            {localStorage.getItem('percentageChange') !== '' &&
-                                localStorage.getItem('percentageChange') !== null &&
-                                !isNaN(Number(localStorage.getItem('percentageChange'))) ? (
-                                <p>
-                                    Стоимость портфеля пользователя:{' '}
-                                    {Number(localStorage.getItem('portfolioValue')).toFixed(2)} USD (
-                                    {localStorage.getItem('percentageChange')}%)
-                                </p>
-                            ) : (
-                                <p>Значения не найдены.</p>
-                            )}
-                        </div>
                     </div>
                 </div>
             </div>
